@@ -15,16 +15,16 @@ Fork the project, work on the solution and send us back a link to your forked Gi
 
   The prices are integers for example, 100.00€ would be 10000.
   
--[ ] You can store the products as you see fit (json file, in memory, rdbms of choice)
--[ ] Products in the "insurance" category have a 30% discount.
--[ ] The product with sku = 000003 has a 15% discount.
--[ ] Provide a single endpoint. GET /products.
--[ ] Can be filtered by category as a query string parameter.
--[ ] (optional) Can be filtered by price as a query string parameter, this filter applies before discounts are applied.
--[ ] Returns a list of Products with the given discounts applied when necessary Product model.
--[ ] price.currency is always EUR.
--[ ] When a product does not have a discount, price.final and price.original should be the same number and discount_percentage should be null.
--[ ] When a product has a discount, price.original is the original price, price.final is the amount with the discount applied and discount_percentage represents the applied discount with the % sign.
+-[x] You can store the products as you see fit (json file, in memory, rdbms of choice)
+-[x] Products in the "insurance" category have a 30% discount.
+-[x] The product with sku = 000003 has a 15% discount.
+-[x] Provide a single endpoint. GET /products.
+-[x] Can be filtered by category as a query string parameter.
+-[x] (optional) Can be filtered by price as a query string parameter, this filter applies before discounts are applied.
+-[x] Returns a list of Products with the given discounts applied when necessary Product model.
+-[x] price.currency is always EUR.
+-[x] When a product does not have a discount, price.final and price.original should be the same number and discount_percentage should be null.
+-[x] When a product has a discount, price.original is the original price, price.final is the amount with the discount applied and discount_percentage represents the applied discount with the % sign.
 
 Example product with a discount of 30% applied:  
 `    {
@@ -90,3 +90,80 @@ The following dataset is the only dataset you need to be able to serve on the AP
       }
     ]
   }`
+
+
+# Instructions
+
+##### Clone Repository
+
+```
+git clone git@github.com:fordbedia/api-requirements.git
+```
+
+#####  Install Dependency packages
+```composer install```
+
+#####  Generate keys
+```php artisan key:generate```
+
+##### Run migration and seeder
+```php artisan migrate --seed```
+
+
+##### Endpoints
+```/api/products?category=insurance```
+
+```/api/products?price=<min>,<max>```
+```/api/products?price=2000,81486```
+
+##### Sample returned dataset
+```json
+{
+    "products": [
+        {
+            "sku": "000005",
+            "name": "numquam",
+            "category": "Insurance",
+            "price": {
+                "original": 41707,
+                "final": 29194.9,
+                "currency": "EUR",
+                "discount_percentage": "30%"
+            }
+        },
+        {
+            "sku": "0000014",
+            "name": "quo",
+            "category": "Insurance",
+            "price": {
+                "original": 25956,
+                "final": 18169.2,
+                "currency": "EUR",
+                "discount_percentage": "30%"
+            }
+        },
+        {
+            "sku": "0000015",
+            "name": "ut",
+            "category": "Insurance",
+            "price": {
+                "original": 53023,
+                "final": 37116.1,
+                "currency": "EUR",
+                "discount_percentage": "30%"
+            }
+        },
+        {
+            "sku": "0000018",
+            "name": "doloribus",
+            "category": "Insurance",
+            "price": {
+                "original": 44931,
+                "final": 31451.7,
+                "currency": "EUR",
+                "discount_percentage": "30%"
+            }
+        }
+    ]
+}
+```

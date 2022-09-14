@@ -26,12 +26,14 @@ trait FilterPrice {
             ->map(function ($p) {
                 // For Insurance
                 if ($p->category->slug === 'insurance') {
-                    $p->price->final = $p->price->original - ($p->price->original * ($this->insuranceDiscount/100));
+                    $final = $p->price->original - ($p->price->original * ($this->insuranceDiscount/100));
+                    $p->price->final = number_format($final, 0);
                     $p->price->discount_percentage = $this->insuranceDiscount . '%';
                 }
                 // For 000003 SKU
                 if ($p->sku === $this->skuDiscountValue) {
-                    $p->price->final = $p->price->original - ($p->price->original * ($this->skuDiscount/100));
+                    $final = $p->price->original - ($p->price->original * ($this->skuDiscount/100));
+                    $p->price->final = number_format($final, 0);
                     $p->price->discount_percentage = $this->skuDiscount.'%';
                 }
 
